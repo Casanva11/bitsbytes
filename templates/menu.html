@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Codificación por defecto-->
+    <title>Menu</title>
+
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="menu">
+        <a href="/inicio">
+            <h1 class="display-5 text-center mt-4 titulo">Bits/Bytes</h1>
+        </a>
+        <ul>
+            <h5>Bienvenido, {{ usuario }}</h5>
+            <li onclick="toggleSubmenu('productos')" class="btn btn-primary btn-block btn-lg {{'active' if activo == 'productos'}}">Productos</li>
+            <div id="productos" class="submenu {{'active' if activo == 'productos'}}">
+                <a href="/productos">Productos</a>
+                {% if admin %}
+                    <a href="/for-crear-producto">Añadir Producto</a>
+                    <a href="/asociar">Asociar Producto/Proveedor</a>
+                {% endif %}
+            </div>
+            <li onclick="toggleSubmenu('graficas')" class="btn btn-primary btn-block btn-lg" >Graficas</li>
+            <div id="graficas" class="submenu {{'active' if activo == 'grafico'}}">
+                <a href="/graficas-ventas">Ventas</a>
+                {% if admin %}
+                    <a href="/graficas-beneficios">Beneficios Proveedores</a>
+                    <a href="/estadisticas">Estadísticas Ventas/Compra</a>
+                {% endif %}
+            </div>
+            {% if admin %}
+                <li onclick="toggleSubmenu('clientes')" class="btn btn-primary btn-block btn-lg {{'active' if activo == 'clientes'}}" >Clientes</li>
+                <div id="clientes" class="submenu {{'active' if activo == 'clientes'}}">
+                    <a href="/cliente">Añadir Cliente</a>
+                    <a href="/for-editar-cliente">Editar Cliente</a>
+                    <a href="/lista-cliente">Listado Clientes</a>
+                    <a href="/todos-pedidos-clientes">Pedidos Clientes</a>
+                </div>
+                <li onclick="toggleSubmenu('proveedores')" class="btn btn-primary btn-block btn-lg {{'active' if activo == 'proveedor'}}" >Proveedores</li>
+                <div id="proveedores" class="submenu {{'active' if activo == 'proveedor'}}">
+                    <a href="/proveedor">Añadir Proveedor</a>
+                    <a href="/editar-proveedor">Editar Proveedor</a>
+                    <a href="/lista-proveedor">Listado Proveedores</a>
+                    <a href="/lista-pedidos-proveedor">Pedidos a Proveedores</a>
+
+                </div>
+            {% endif %}
+            <li onclick="toggleSubmenu('perfil')" class="btn btn-primary btn-block btn-lg {{'active' if activo == 'perfil'}}" >Perfil</li>
+            <div id="perfil" class="submenu {{'active' if activo == 'perfil'}}" >
+                <a href="/lista-pedido-cliente">Mis Pedidos</a>
+                <a href="/perfil">Editar Perfil</a>
+                <a href="/password">Modificar contraseña</a>
+            </div>
+            <a href="/" style="text-decoration:none">
+                <button class="btn btn-danger btn-block btn-lg">SALIR</button>
+            </a>
+        </ul>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>    function toggleSubmenu(id) {$("#" + id).toggleClass("active");}</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráficos de Beneficios</title>
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+    <main class="container p-4">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <img src="data:image/png;base64,{{ grafica_base64 }}" alt="Gráfica de Beneficios">
+            </div>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>

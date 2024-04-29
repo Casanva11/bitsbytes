@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Cliente</title>
+
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+        <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">Crear Cliente</h1>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <div class="card-header">
+                                {% if mensaje %}
+                                    <p class="text-danger infocontramal">{{mensaje}}</p>
+                                {% endif %}
+                                <form action="/crear-cliente" method="post">
+                                    <div class="form-group">
+                                        <label>Nombre:</label>
+                                        <input type="text" name="nombre" placeholder="Nombre" class="form-control" autofocus>
+                                        <label>Apellidos:</label>
+                                        <input type="text" name="apellidos" placeholder="Apellidos" class="form-control">
+                                        <label>DNI/CIF:</label>
+                                        <input type="text" name="dni" placeholder="DNI/CIF" class="form-control">
+                                        <label>Dirección:</label>
+                                        <input type="text" name="direccion" placeholder="Dirección" class="form-control">
+                                        <label>Provincia:</label>
+                                        <input type="text" name="provincia" placeholder="Provincia" class="form-control">
+                                        <label>Código Postal:</label>
+                                        <input type="text" name="cp" placeholder="CP" class="form-control">
+                                        <label>Email:</label>
+                                        <input type="email" name="email" placeholder="Email" class="form-control">
+                                        <label>Teléfono:</label>
+                                        <input type="text" name="telf" placeholder="Telf" class="form-control">
+                                        <label>Contraseña/Usuario:</label>
+                                        <input type="password" name="password" placeholder="Password" class="form-control">
+                                        <label>Rol Usuario:</label>
+                                        <select class="form-select" name="select_rol">
+                                            {% for rol in roles %}
+                                                <option>{{rol.name_rol}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                                        CREAR CLIENTE
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    {% endblock %}
+</body>
+</html>

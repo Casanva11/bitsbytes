@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfica de Ventas</title>
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+    <main class="container p-4">
+        <h1 class="display-12 text-center mt-1">Total de Ventas por Producto</h1>
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <img src="data:image/png;base64,{{ grafica_base64 }}" alt="Gráfica de Ventas">
+            </div>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>

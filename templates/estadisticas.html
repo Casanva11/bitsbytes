@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <title>Estadísticas de Ventas y Compras</title>
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+<main class="container p-4">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Estadísticas de Ventas</h1>
+                        <h3 class="text-center">Ventas por Producto</h3>
+                        <table class="table table-hover">
+                        <thead class="table-primary">
+                            <tr class="text-center">
+                                <th>PRODUCTOS</th>
+                                <th>CANTIDAD VENDIDA</th>
+                                <th>PRECIO TOTAL</th>
+                            </tr>
+                        </thead>
+                            {% for producto, cantidad, precio in ventas_por_producto %}
+                            <tr class="text-center">
+                                <td>{{ producto }}</td>
+                                <td>{{ cantidad }}</td>
+                                <td>{{ precio }} €</td>
+                            </tr>
+                            {% endfor %}
+                            <tr class="text-center table-info">
+                                <th>-- TOTAL --</th>
+                                <th>{{ numero_ventas }} </th>
+                                <th>{{ total_ventas }} €</th>
+                            </tr>
+                        </table>
+                        <table class="table table-hover">
+                        <thead class="table-primary">
+                            <tr class="text-center">
+                                <th>CLIENTES</th>
+                                <th>CANTIDAD VENDIDA</th>
+                                <th>PRECIO TOTAL</th>
+                            </tr>
+                        </thead>
+                            {% for clientes, cantidad, precio in ventas_por_cliente %}
+                            <tr class="text-center">
+                                <td>{{ clientes }}</td>
+                                <td>{{ cantidad }}</td>
+                                <td>{{ precio }} €</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+<main class="container p-4">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <div class="card">
+                    <div class="card-header">
+                    <h1>Estadísticas de Compras</h1>
+                    <h3 class="text-center" >Compras por Proveedor</h3>
+                    <table class="table table-hover">
+                    <thead class="table-primary">
+                        <tr class="text-center">
+                            <th>PROVEEDORES</th>
+                            <th>CANTIDAD COMPRADA (UND)</th>
+                            <th>COSTE TOTAL</th>
+                        </tr>
+                    </thead>
+                        {% for proveedor, cantidad, precio in compras_por_proveedor %}
+                        <tr class="text-center">
+                            <td>{{ proveedor }}</td>
+                            <td>{{ cantidad }}</td>
+                            <td>{{ precio }} €</td>
+                        </tr>
+                        {% endfor %}
+                    <tr class="text-center table-info">
+                        <th>-- TOTAL --</th>
+                        <th>{{ numero_compras }} </th>
+                        <th>{{ total_compras }} €</th>
+                    </tr>
+            </table>
+             <table class="table table-hover">
+                    <thead class="table-primary">
+                        <tr class="text-center" >
+                            <th>PRODUCTOS A PROVEEDORES</th>
+                            <th>CANTIDAD COMPRADA (UND)</th>
+                            <th>PRECIO TOTAL</th>
+                        </tr>
+                    </thead>
+                        {% for producto, cantidad, precio in compras_por_producto %}
+                        <tr class="text-center">
+                            <td>{{ producto }}</td>
+                            <td >{{ cantidad }}</td>
+                            <td>{{ precio }} €</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+{% endblock %}
+</body>
+</html>

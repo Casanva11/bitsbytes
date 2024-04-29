@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Proveedor</title>
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+        <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">Crear Proveedor</h1>
+                {% if mensaje %}
+                        <p class="text-success text-center" style="font-size: 20px; font-weight: bold;">{{ mensaje }}</p>
+                    {% endif %}
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <div class="card-header">
+                                <form action="/crear-proveedor" method="post">
+                                    <div class="form-group">
+                                        <label>Empresa:</label>
+                                        <input type="text" name="nombreEmpresa" placeholder="Nombre" class="form-control" autofocus>
+                                        <label>CIF:</label>
+                                        <input type="text" name="cif" placeholder="CIF" class="form-control">
+                                        <label>Dirección:</label>
+                                        <input type="text" name="direccion" placeholder="Dirección" class="form-control">
+                                        <label>Provincia:</label>
+                                        <input type="text" name="provincia" placeholder="Provincia" class="form-control">
+                                        <label>Código Postal:</label>
+                                        <input type="text" name="cp" placeholder="CP" class="form-control">
+                                        <label>Teléfono:</label>
+                                        <input type="text" name="telf" placeholder="Telefono" class="form-control">
+                                        <label>Email:</label>
+                                        <input type="text" name="email" placeholder="Email" class="form-control">
+                                        <label>IVA:</label>
+                                        <input type="text" name="iva" placeholder="IVA" class="form-control">
+                                        <label>Descuento Proveedor:</label>
+                                        <input type="text" name="descuento" class="form-control" value="0">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg"> <!-- "btn-block" hace que el boton ocupe todo el ancho -->
+                                        Guardar Cliente
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    {% endblock %}
+</body>
+</html>

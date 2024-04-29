@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asociar Producto Proveedor</title>
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% extends "menu.html" %}
+    {% block content %}
+    <!-- Filtro de Clientes-->
+    <main class="container p-4" id="buscador">
+                <h1 class="display-4 text-center mt-4">Asociar Productos a Proveedores</h1>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <form action="/filtro-asociar" method="post">
+                        <div class="input-group">
+                                <!--<label class="form-label ">ID:</label>-->
+                                <input type="text" name="filtro_id" placeholder="Identificador" class="form-control" autofocus>
+                                <!--<label class="form-label mt-4">DNI:</label>-->
+                                <input type="text" name="filtro_nombre" placeholder="Nombre" class="form-control">
+                                <button type="submit" class="btn btn-primary">
+                                    Buscar
+                                </button>
+                            </div>
+                            <small id="busquedahelp" class="form-text text-muted">Podemos buscar el producto por Identificador o por su Nombre</small>
+                        </form>
+                    </div>
+                </div>
+    </main>
+        <!-- Listado de productos en una tabla -->
+    <main class="container p-4">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <small id="explicacion" class="form-text text-muted">¡IMPORTANTE! Si el producto ya está relacionado lo que hace es actualizar la tarifa del proveedor.</small>
+                    <table class="table table-hover" id="tabla">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>PROVEEDOR</th>
+                            <th>TARIFA PROVEEDOR</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for productos in lista_productos %}
+                    <form action="/crear-asociar/{{productos.id_producto}}" method="post">
+                        <tr>
+                            <td>{{productos.id_producto}}</td>
+                            <td>{{productos.nombre}}</td>
+                            <td><select class="form-select" name="select_proveedor">
+                                {% for proveedor in lista_proveedor %}
+                                    <option>{{proveedor.nombre_empresa}}</option>
+                                {% endfor %}
+                            </select></td>
+                            <td><label><input type="text" name="precioproveedor" placeholder="Tarifa Proveedor (Euros)" class="form-control"></label></td>
+                            <td><button class="btn btn-primary">ASOCIAR/ACTUALIZAR</button></td>
+                        </tr>
+                    </form>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+</body>
+</html>

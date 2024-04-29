@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% extends "menu.html" %}
+    {% block content %}
+    <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">Editar Cliente</h1>
+                    <tr class="fila-editar" id="fila-editar-{{cliente.id_cliente}}">
+                        <form action="/editar-producto/{{cliente.id_cliente}}" method="post">
+                            <td>{{cliente.id_cliente}}</td>
+                            <td><input type="text" name="nombre" class="form-control"></td>
+                            <td><input type="text" name="stock" class="form-control" size="3"></td>
+                            <td><input type="text" name="precio" class="form-control" size="3"></td>
+                            <td><input type="text" name="ean" class="form-control" size="3"></td>
+                            <td><input type="text" name="color" class="form-control" size="3"></td>
+                            <td>
+                                <div>
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                 <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <div class="fila-editar" style="display:none" id="fila-editar-{{ cliente.id_cliente }}">
+                                <form action="/crear-cliente" method="post">
+                                    <div class="form-group">
+                                            <label>Nombre:</label>
+                                            <input type="text" name="nombre" placeholder="{{cliente.nombre}}" class="form-control" autofocus>
+                                            <label>Apellidos:</label>
+                                            <input type="text" name="apellidos" placeholder="{{cliente.apellidos}}" class="form-control">
+                                            <label>DNI/CIF:</label>
+                                            <input type="text" name="dni" placeholder="{{cliente.dni}}" class="form-control">
+                                            <label>Dirección:</label>
+                                            <input type="text" name="direccion" placeholder="{{cliente.direccion}}" class="form-control">
+                                            <label>Provincia:</label>
+                                            <input type="text" name="provincia" placeholder="{{cliente.provincia}}" class="form-control">
+                                            <label>Código Postal:</label>
+                                            <input type="text" name="cp" placeholder="{{cliente.cp}}" class="form-control">
+                                            <label>Email:</label>
+                                            <input type="email" name="email" placeholder="{{cliente.email}}" class="form-control">
+                                            <label>Teléfono:</label>
+                                            <input type="text" name="telf" placeholder="{{cliente.telf}}" class="form-control">
+                                            <label>Contraseña/Usuario:</label>
+                                            <input type="password" name="password" placeholder="{{cliente.password}}" class="form-control">
+                                            <label>Rol Usuario:</label>
+                                        <select class="form-select" name="select_rol">
+                                            {% for rol in roles %}
+                                                <option>{{rol.name_rol}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        CREAR CLIENTE
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+</main>
+    {% endblock %}
+</body>
+</html>

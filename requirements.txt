@@ -1,0 +1,5 @@
+SQLAlchemy~=2.0.27
+matplotlib~=3.8.4
+Flask~=3.0.2
+WTForms~=3.1.2
+Flask-WTF~=1.2.1

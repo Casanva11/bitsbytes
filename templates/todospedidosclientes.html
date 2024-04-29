@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos Pedidos CLientes</title>
+<!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+{% extends "menu.html" %}
+    <div class="content">
+        {% block content %}
+        <!-- Filtro de Pedidos-->
+        <main class="container p-4" id="buscador">
+                    <h1 class="display-4 text-center mt-4">Todos los Pedidos de Cliente</h1>
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                            <form action="/filtro-todos-pedidos-clientes" method="post">
+                            <div class="input-group">
+                                    <input type="text" name="filtro_cliente" placeholder="Nombre Cliente" class="form-control" autofocus>
+                                    <input type="text" name="filtro_producto" placeholder="Nombre Producto" class="form-control" autofocus>
+                                    {{ form.dt(class='datepicker') }}
+                                    <button type="submit" class="btn btn-primary">
+                                        Buscar
+                                    </button>
+                                </div>
+                                <small id="busquedahelp" class="form-text text-muted">Podemos buscar por Nombre de producto, Nombre de cliente o por Fecha de compra.</small>
+                            </form>
+                        </div>
+                    </div>
+        </main>
+        <!-- Listado de Pedidos en una tabla -->
+        <main class="container p-2">
+            <div class="row">
+                <div class="col-md-10 offset-md-1 my-auto">
+                    <table class="table table-hover" >
+                        <thead class="table-primary">
+                            <tr>
+                                <th>CLIENTE</th>
+                                <th>PRODUCTO</th>
+                                <th>FECHA</th>
+                                <th>UND COMPRADAS</th>
+                                <th>PRECIO/UND</th>
+                                <th>IVA/COMPRA</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if lista_pedido_cliente %}
+                            {% for producto, cliente, venta in lista_pedido_cliente %}
+                                <tr>
+                                    <td>{{cliente.nombre}}</td>
+                                    <td>{{producto.nombre}}</td>
+                                    <td>{{venta.fecha_compra}}</td>
+                                    <td>{{venta.cantidad}}</td>
+                                    <td>{{venta.precio}} €</td>
+                                    <td>{{venta.iva}} €</td>
+                                    <th>{{venta.total}} €</th>
+                                </tr>
+                            {% endfor %}
+                        {%endif%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+</body>
+</html>

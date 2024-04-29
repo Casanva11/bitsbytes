@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedido Cliente</title>
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+        <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">Pedido Cliente</h1>
+                {% if mensaje %}
+                        <p class="text-danger text-center" style="font-size: 20px; font-weight: bold;">{{ mensaje }}</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <h2 class="display-5 text-center mt-4">{{producto.nombre}}</h2>
+                            <div class="card-header">
+                                <form action="/crear-pedido-cliente/{{producto.id_producto}}" method="post">
+                                    <div class="form-group">
+                                        <label>Cantidad:</label>
+                                        <input  type="text" name="cantidad" class="form-control" autofocus>
+                                        <label>Precio(Und):</label>
+                                        <input type="text" name="precio" value="{{producto.precio}} €" class="form-control" disabled="">
+                                        <label>Color:</label>
+                                        <input type="text" name="color" value="{{producto.color}}" class="form-control" disabled="">
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-block btn-lg">
+                                        Hacer Pedido
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    {% endblock %}
+</body>
+</html>

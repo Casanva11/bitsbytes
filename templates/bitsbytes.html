@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Codificación por defecto-->
+    <title>Bits/Bytes</title>
+
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% extends "menu.html" %}
+    {% block content %}
+    <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">BIENVENIDO A BITS/BYTES</h1>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <div class="card-header text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="/productos"><button type="button" class="btn btn-success btn-lg">PRODUCTOS</button></a>
+                                    <a href="/graficas-ventas"><button type="button" class="btn btn-warning btn-lg">GRAFICO VENTAS</button></a>
+                                    <a href="/lista-pedido-cliente"><button type="button" class="btn btn-info btn-lg">PEDIDOS</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    {% if admin %}
+     <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">INFORMACIÓN DIARIA</h1>
+                <div class="row">
+                    <div class="col-md-10 offset-md-1 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <div class="card-header">
+                                <H2 class="text-center">Pedir al proveedor</H2>
+                                <H3 class="text-danger text-center">Información del Stock con menos del 90%</H3>
+                                <table class="table table-hover" >
+                                    <thead class="table-primary">
+                                        <tr class="text-center">
+                                            <th>NOMBRE</th>
+                                            <th>STOCK</th>
+                                            <th>STOCK RECOMENDADO</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for producto in aviso_stock %}
+                                        <tr class="text-center">
+                                            <td>{{producto.nombre}}</td>
+                                            <td>{{producto.stock}}</td>
+                                            <td>{{producto.max_stock}}</td>
+                                            <td>
+                                                <a href="/tarifas-proveedor/{{producto.id_producto}}">
+                                                    <button class="btn btn-warning">Perdir al Proveedor</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    {%endif%}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Producto</title>
+</head>
+<body>
+{% extends "menu.html" %}
+    {% block content %}
+        <main class="container p-4">
+                <h1 class="display-4 text-center mt-4">Añadir Producto</h1>
+                {% if mensaje %}
+                        <p class="text-success text-center" style="font-size: 20px; font-weight: bold;">{{ mensaje }}</p>
+                    {% endif %}
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <div class="card"> <!--Creacion del objeto card-->
+                            <div class="card-header">
+                                <form action="/crear-producto" method="post">
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <input type="text" name="nombre" placeholder="Nombre del producto" class="form-control" autofocus>
+                                        <label>Precio Venta Público €</label>
+                                        <input type="text" name="precio" placeholder="Precio venta al público" class="form-control">
+                                        <label>EAN</label>
+                                        <input type="text" name="ean" placeholder="EAN" class="form-control">
+                                        <label>Color</label>
+                                        <input type="text" name="color" placeholder="Color del producto" class="form-control">
+                                        <label>Stock Actual</label>
+                                        <input type="text" name="stock" placeholder="" class="form-control">
+                                        <label>Stock Recomendado</label>
+                                        <input type="text" name="stock_re" placeholder="" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg"> <!-- "btn-block" hace que el boton ocupe todo el ancho -->
+                                        CREAR PRODUCTO
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+    {% endblock %}
+</body>
+</html>

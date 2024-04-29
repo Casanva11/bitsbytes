@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos a Proveedores</title>
+<!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+{% extends "menu.html" %}
+<div class="content">
+    {% block content %}
+        <h2 class="display-4 text-center mt-4">Pedidos a Proveedores</h2>
+        <!-- Filtro de Pedidos-->
+        <main class="container p-4" id="buscador">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                    <form action="/filtro-pedidos-proveedor" method="post">
+                    <div class="input-group">
+                            <input type="text" name="filtro_nombre" placeholder="Nombre Producto" class="form-control" autofocus>
+                            <input type="text" name="filtro_proveedor" placeholder="Proveedor" class="form-control" autofocus>
+                            {{ form.dt(class='datepicker') }}
+                            <button type="submit" class="btn btn-primary">
+                                Buscar
+                            </button>
+                        </div>
+                        <small id="busquedahelp" class="form-text text-muted">Podemos buscar por Nombre de producto por Proveedor o por Fecha de pedido.</small>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <!-- Listado de productos en una tabla -->
+            <table class="table table-hover" >
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>FECHA</th>
+                        <th>PRODUCTO</th>
+                        <th>PROVEEDOR</th>
+                        <th>UND COMPRADAS</th>
+                        <th>PRECIO/UND</th>
+                        <th>DESCUENTO</th>
+                        <th>IVA</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for producto, proveedor, compra in lista_pedido_proveedor %}
+                    <tr>
+                        <td>{{compra.id_compraproveedor}}</td>
+                        <td>{{compra.fecha_compra}}</td>
+                        <td>{{producto.nombre}}</td>
+                        <td>{{proveedor.nombre_empresa}}</td>
+                        <td>{{compra.cantidad}} /Und</td>
+                        <td>{{compra.precio}} €</td>
+                        <td>{{compra.descuento}} %</td>
+                        <td>{{compra.iva}} %</td>
+                        <th>{{compra.total}} €</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}
+</body>
+</html>

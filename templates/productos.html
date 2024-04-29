@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+     <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-bFN5Hl4hFTVlKZDJyuxs2QPe5S6sXz4Im0PYCBDeSEBjVyI+Xy/hXwj5L2i7yB0W3FEB9L4JB5s0kPl/WUHuJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+{% extends "menu.html" %}
+    <div class="content">
+        {% block content %}
+            <h2 class="display-4 mt-4">Productos</h2>
+
+        <!-- Agregar un producto -->
+        {% if admin %}
+                <table class="table table-hover" style="display:none"  id="fila-agregar">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>NOMBRE</th>
+                            <th>PRECIO</th>
+                            <th>EAN</th>
+                            <th>COLOR</th>
+                            <th>STOCK</th>
+                            <th>MAX STOCK</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fila-editar">
+                            <form action="/crear-producto" method="post">
+                                <td><input type="text" name="nombre" class="form-control"></td>
+                                <td><input type="text" name="precio" class="form-control" size="3"></td>
+                                <td><input type="text" name="ean" class="form-control" size="3"></td>
+                                <td><input type="text" name="color" class="form-control" size="3"></td>
+                                <td><input type="text" name="stock" class="form-control" size="3"></td>
+                                <td><input type="text" name="stock_re" class="form-control" size="3"></td>
+                                <td><button type="submit" class="btn btn-success">Guardar</button></td>
+                            </form>
+                        </tr>
+                    </tbody>
+                </table>
+        {% endif %}
+            <div>
+                {% if admin %}
+                    <button type="button" class="btn btn-success" style="display:none" onclick="mostrarAgregar()">Agregar Producto</button>
+                {%endif%}
+                <button type="button" class="btn btn-warning" onclick="mostrarFiltro()">Búsqueda avanzada</button>
+            </div>
+
+        <!-- Barra de Filtrado -->
+        <main class="container p-4"style="display:none" id="form-filtro">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <div class="card">
+                    <div class="card-header">
+                <div  class="container"  > <!--style="display:none"-->
+                    <h1>Filtrar Productos</h1>
+                    <form action="/filtro-producto" method="post">
+                        <div class="form-group">
+                            <label for="filtro_id">Identificador:</label>
+                            <input type="text" id="filtro_id" name="filtro_id">
+                        </div>
+                        <div class="form-group">
+                            <label for="filtro_nombre">Nombre:</label>
+                            <input type="text" id="filtro_nombre" name="filtro_nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="filtro_precio_min">Precio mínimo:</label>
+                            <input type="number" id="filtro_precio_min" name="filtro_precio_min">
+                        </div>
+                        <div class="form-group">
+                            <label for="filtro_precio_max">Precio máximo:</label>
+                            <input type="number" id="filtro_precio_max" name="filtro_precio_max">
+                        </div>
+                            <button type="submit"  class="btn btn-primary">Filtrar</button>
+                        </form>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+            <!-- Listado de productos en una tabla -->
+            <table class="table table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>NOMBRE</th>
+                        <th>PRECIO</th>
+                        <th>EAN</th>
+                        <th>COLOR</th>
+                        <th>STOCK</th>
+                        <th>MAX STOCK</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for product in lista_productos %}
+                    <tr>
+                        <td>{{product.id_producto}}</td>
+                        <td>{{product.nombre}}</td>
+                        <td>{{product.precio}} €</td>
+                        <td>{{product.ean}}</td>
+                        <td>{{product.color}}</td>
+                        <td>{{product.stock}}</td>
+                        <td>{{product.max_stock}}</td>
+                            <td>
+                                <div>
+                                    <a href="/pedido-cliente/{{product.id_producto}}">
+                                        <button class="btn btn-success">Pedir</button>
+                                    </a>
+                        {% if admin %}
+                                    <a href="/tarifas-proveedor/{{product.id_producto}}">
+                                        <button class="btn btn-warning">Tarifas</button>
+                                    </a>
+                                    <button class="btn btn-primary" onclick="mostrarEditar({{product.id_producto}})">Editar</button>
+                                    <a href="/eliminar-producto/{{product.id_producto}}">
+                                        <button class="btn btn-danger">Eliminar</button>
+                                    </a>
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% if admin %}
+                    <tr class="fila-editar" style="display:none" id="fila-editar-{{ product.id_producto }}">
+                        <form action="/editar-producto/{{product.id_producto}}" method="post">
+                            <td>{{product.id_producto}}</td>
+                            <td><input type="text" name="nombre" value="{{product.nombre}}" class="form-control"></td>
+                            <td><input type="text" name="precio" value="{{product.precio}}" class="form-control" size="3"></td>
+                            <td><input type="text" name="ean" value="{{product.ean}}" class="form-control" size="3"></td>
+                            <td><input type="text" name="color" value="{{product.color}}" class="form-control" size="3"></td>
+                            <td><input type="text" name="stock"  value="{{product.stock}}" class="form-control" size="3"></td>
+                            <td><input type="text" name="maxstock"  value="{{product.max_stock}}" class="form-control" size="3"></td>
+                            <td>
+                                <div>
+                                    <button type="submit" class="btn btn-success">Actualizar Producto</button>
+                                    <!--<button class="btn btn-danger">Cancelar</button>-->
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+                    {% if msg_correcto %}
+                        <p class="text-success" style="font-size: 20px; font-weight: bold;">{{ msg_correcto }}</p>
+                    {% endif %}
+            </table>
+        </div>
+
+</div>
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function toggleSubmenu(id) {
+                $("#" + id).toggleClass("active");
+            }
+
+             function mostrarEditar(id) {
+                var filaEditar = document.getElementById('fila-editar-' + id);
+                filaEditar.style.display = filaEditar.style.display === 'none' ? 'table-row' : 'none';
+            }
+            function mostrarAgregar() {
+                var filaAgregar = document.getElementById('fila-agregar');
+                filaAgregar.style.display = filaAgregar.style.display === 'none' ? 'block' : 'none';
+            }
+            function mostrarFiltro() {
+                var filaFiltrar = document.getElementById('form-filtro');
+                filaFiltrar.style.display = filaFiltrar.style.display === 'none' ? 'block' : 'none';
+                mostrar_div=True
+            }
+        </script>
+{% endblock %}
+</body>
+</html>

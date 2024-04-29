@@ -1,0 +1,137 @@
+.titulo {
+    font-family: "Honk", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "MORF" 15,
+        "SHLN" 50;
+
+}
+/*
+ /* CSS Formulario usuario y contraseña */
+.login-container {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+/*-------------------------------------------------*/
+/* Aparto de modificar contraseña, el estilo de la info que sale si te equivocas*/
+.infocontramal{
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.infocontrabien{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+/*
+.boton-editar {
+    position: absolute;
+    top: 335px;
+    right: 20px;
+}
+/*-------------------------------------------------*/
+
+.menu {
+    background-color: #f8f9fa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    overflow-y: auto;
+    border-right: 1px solid #ccc;
+}
+
+.menu-header {
+    background-color: #343a40;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s;
+}
+
+.menu ul li:hover {
+    color: black;
+    background-color: #e9ecef;
+}
+
+.submenu {
+    display: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+}
+
+.submenu a {
+    display: block;
+    padding: 10px 40px;
+    color: #495057;
+    transition: background-color 0.3s;
+}
+
+.submenu a:hover {
+    background-color: #e9ecef;
+}
+
+.menu ul li.active {
+    font-weight: bold;
+    background-color: #e9ecef;
+}
+
+.submenu.active {
+    display: block;
+}
+
+/*---------------------------------------------------*/
+.content {
+    margin-left: 250px;
+    padding: 20px;
+   }
+.postal {
+    width: 20px; /* Ajustamos el ancho del input de código postal */
+}

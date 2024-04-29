@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado Proveedores</title>
+
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+{% extends "menu.html" %}
+    <div class="content">
+        {% block content %}
+        <h2 class="display-4 text-center mt-4">Listado Proveedores</h2>
+         <!-- Listado de productos en una tabla -->
+            <table class="table table-hover" >
+                <thead class="table-primary">
+                    <tr>
+                        <td>ID</td>
+                        <td>CIF</td>
+                        <td>NOMBRE</td>
+                        <td>DIRECCION</td>
+                        <td>PROVINCIA</td>
+                        <td>CP</td>
+                        <td>TELEFONO</td>
+                        <td>EMAIL</td>
+                        <td>IVA</td>
+                        <td>DESCUENTO</td>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for proveedor in lista_proveedor %}
+                    <tr>
+                        <td>{{proveedor.id_proveedor}}</td>
+                        <td>{{proveedor.cif}}</td>
+                        <td>{{proveedor.nombre_empresa}}</td>
+                        <td>{{proveedor.direccion}}</td>
+                        <td>{{proveedor.provincia}}</td>
+                        <td>{{proveedor.cp}}</td>
+                        <td>{{proveedor.telf}}</td>
+                        <td>{{proveedor.email}}</td>
+                        <td>{{proveedor.iva}}%</td>
+                        <td>{{proveedor.descuento}}%</td>
+                        <td>
+                            <div>
+                                <a href="/eliminar-proveedor/{{proveedor.id_proveedor}}">
+                                    <button class="btn btn-danger">Eliminar</button>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}
+</body>
+</html>

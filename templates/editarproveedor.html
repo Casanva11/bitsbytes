@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Proveedor</title>
+
+
+    <!-- La hoja de estilo local (main.css) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plantilla de Bootstrap -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lumen/bootstrap.min.css" integrity="sha384-GzaBcW6yPIfhF+6VpKMjxbTx6tvR/yRd/yJub90CqoIn2Tz4rRXlSpTFYMKHCifX" crossorigin="anonymous">
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% extends "menu.html" %}
+    {% block content %}
+    <!-- Filtro de Clientes-->
+    <main class="container p-4" id="buscador">
+                <h1 class="display-4 text-center mt-4">Editar Proveedor</h1>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 my-auto"> <!--Este div ocupará 4 columnas del espacio (centrado)-->
+                        <form action="/filtro-editar-proveedor" method="post">
+                        <div class="input-group">
+                                <!--<label class="form-label ">ID:</label>-->
+                                <input type="text" name="filtro_id" placeholder="Identificador" class="form-control" autofocus>
+                                <!--<label class="form-label mt-4">DNI:</label>-->
+                                <input type="text" name="filtro_dni" placeholder="NIF/DNI" class="form-control">
+                                <input type="text" name="filtro_nombre" placeholder="Nombre" class="form-control">
+                                <button type="submit" class="btn btn-primary">
+                                    Buscar
+                                </button>
+                            </div>
+                            <small id="busquedahelp" class="form-text text-muted">Podemos buscar el proveedor a editar por DNI o por su Identificador</small>
+                        </form>
+                    </div>
+                </div>
+    </main>
+        <!-- Listado de productos en una tabla -->
+    <main class="container p-2">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 my-auto">
+                <table class="table table-hover" id="tabla">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>DNI/CIF</th>
+                                    <th>NOMBRE</th>
+                                    <th>EMAIL</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for proveedor in lista_proveedor %}
+                                <tr>
+                                    <td>{{proveedor.id_proveedor}}</td>
+                                    <td>{{proveedor.cif}}</td>
+                                    <td>{{proveedor.nombre_empresa}}</td>
+                                    <td>{{proveedor.email}}</td>
+                                    <td>
+                                        <div>
+                                            <button class="btn btn-primary" onclick="mostrarEditar({{proveedor.id_proveedor}})">Editar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <main class="container p-4"  style="display:none" id="fila-editar-{{proveedor.id_proveedor}}">
+                                    <h2 class="display-4 text-center mt-4">Proveedor {{proveedor.nombre_empresa}}</h2>
+                                        <div class="row">
+                                            <div class="col-md-6 offset-md-3 my-auto">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <form action="/editar-proveedor/{{proveedor.id_proveedor}}" method="post">
+                                                            <div class="form-group">
+                                                                <label>Nombre:</label>
+                                                                <input type="text" name="nombre" value="{{proveedor.nombre_empresa}}" class="form-control" autofocus>
+                                                                <label>DNI/CIF:</label>
+                                                                <input type="text" name="cif" value="{{proveedor.cif}}" class="form-control">
+                                                                <label>Dirección:</label>
+                                                                <input type="text" name="direccion" value="{{proveedor.direccion}}" class="form-control">
+                                                                <label>Provincia:</label>
+                                                                <input type="text" name="provincia" value="{{proveedor.provincia}}" class="form-control">
+                                                                <label>Código Postal:</label>
+                                                                <input type="text" name="cp" value="{{proveedor.cp}}" class="form-control">
+                                                                <label>Email:</label>
+                                                                <input type="email" name="email" value="{{proveedor.email}}" class="form-control">
+                                                                <label>Teléfono:</label>
+                                                                <input type="text" name="telf" value="{{proveedor.telf}}" class="form-control">
+                                                                <label>IVA:</label>
+                                                                <input type="text" name="iva" value="{{proveedor.iva}}" class="form-control">
+                                                                <label>Descuento:</label>
+                                                                <input type="text" name="descuento" value="{{proveedor.descuento}}" class="form-control">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success btn-block btn-lg">
+                                                                MODIFICAR PROVEEDOR
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </main>
+                        {% endfor %}
+                            </tbody>
+                </table>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script>
+                     function mostrarEditar(id) {
+                        var filaEditar = document.getElementById('fila-editar-' + id);
+                        filaEditar.style.display = filaEditar.style.display === 'none' ? 'block' : 'none';
+                        var tablacliente = document.getElementById('tabla');
+                        tablacliente.style.display = tablacliente.style.display === 'none' ? 'block' : 'none';
+                        var bloqueBuscador = document.getElementById('buscador');
+                        bloqueBuscador.style.display = bloqueBuscador.style.display === 'none' ? 'block' : 'none';
+                    }
+                </script>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
+</body>
+</html>
