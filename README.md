@@ -13,8 +13,6 @@ BitsBytes es una aplicación desarrollada en Python destinada a la gestión inte
 
 - **Backend:** Python
 - **Frontend:** HTML, CSS
-- **Base de Datos:** [Especificar la base de datos utilizada, si corresponde]
-- **Otros:** [Incluir cualquier otra tecnología o librería relevante]
 
 ## Instalación
 
